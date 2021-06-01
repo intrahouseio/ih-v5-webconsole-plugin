@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-pty-prebuilt-multiarch": "^0.10.1-pre.4",
-    "ws": "^7.4.6"
+    "node-pty-prebuilt-multiarch": "^0.10.1-pre.4"
   }
 }
