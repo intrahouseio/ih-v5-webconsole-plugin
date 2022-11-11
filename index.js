@@ -6,7 +6,9 @@ const pty = require('node-pty-prebuilt-multiarch');
 const logger = require('./lib/logger');
 
 const sessions = {};
+
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
+const opt = os.platform() === 'win32' ? [] : ['--login'];
 
 function sendProcessInfo() {
   const mu = process.memoryUsage();
@@ -59,7 +61,7 @@ function webconsole(opt) {
         const env = Object.assign({}, process.env);
         env['COLORTERM'] = 'truecolor';
   
-        sessions[uuid] = pty.spawn(shell, [], {
+        sessions[uuid] = pty.spawn(shell, opt, {
           name: 'xterm-color',
           cols: data.size.cols,
           rows: data.size.rows,
