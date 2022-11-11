@@ -7,8 +7,8 @@ const logger = require('./lib/logger');
 
 const sessions = {};
 
-const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
-const opt = os.platform() === 'win32' ? [] : ['--login'];
+const shell = os.platform() === 'win32' ? 'powershell.exe' : 'sudo';
+const opt = os.platform() === 'win32' ? [] : ['login'];
 
 function sendProcessInfo() {
   const mu = process.memoryUsage();
