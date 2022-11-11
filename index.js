@@ -8,7 +8,7 @@ const logger = require('./lib/logger');
 const sessions = {};
 
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'sudo';
-const opt = os.platform() === 'win32' ? [] : ['login'];
+const shell_opt = os.platform() === 'win32' ? [] : ['login'];
 
 function sendProcessInfo() {
   const mu = process.memoryUsage();
@@ -61,7 +61,7 @@ function webconsole(opt) {
         const env = Object.assign({}, process.env);
         env['COLORTERM'] = 'truecolor';
   
-        sessions[uuid] = pty.spawn(shell, opt, {
+        sessions[uuid] = pty.spawn(shell, shell_opt, {
           name: 'xterm-color',
           cols: data.size.cols,
           rows: data.size.rows,
