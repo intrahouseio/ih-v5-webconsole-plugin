@@ -65,7 +65,7 @@ function webconsole(opt) {
           name: 'xterm-color',
           cols: data.size.cols,
           rows: data.size.rows,
-          cwd: opt.syspath,
+          cwd: opt.cwd,
           env: env
         });
     
