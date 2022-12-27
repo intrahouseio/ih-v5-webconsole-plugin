@@ -1,7 +1,7 @@
 const path = require('path');
 const os = require('os');
 
-const pty = (os.platform() === 'win32' && process.versions.modules === 108) ? require('node-pty') : require('node-pty-prebuilt-multiarch');
+const pty = (os.platform() === 'win32' && process.versions.modules === '108') ? require('node-pty') : require('node-pty-prebuilt-multiarch');
 
 const logger = require('./lib/logger');
 
