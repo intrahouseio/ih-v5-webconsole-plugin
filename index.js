@@ -1,7 +1,7 @@
 const path = require('path');
 const os = require('os');
 
-const pty = require('./pty/index');
+const pty = require('pty/index');
 
 const logger = require('./lib/logger');
 
