@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
@@ -7,8 +8,40 @@ const logger = require('./lib/logger');
 
 const sessions = {};
 
-const shell = os.platform() === 'win32' ? 'powershell.exe' : 'sudo';
-const shell_opt = os.platform() === 'win32' ? [] : ['login'];
+const hash_map = { sudo: true };
+
+function statFollowLinks() {
+  return fs.statSync.apply(fs, arguments);
+}
+
+function splitPath(p) {
+  return p ? p.split(path.delimiter) : [];
+}
+
+function checkPath(pathName) {
+  return fs.existsSync(pathName) && !statFollowLinks(pathName).isDirectory();
+}
+
+let isExistSudoCommand = false;
+
+if (os.platform() !== 'win32') {
+  const initArray = Object.keys(hash_map);
+  const pathArray = splitPath(process.env.PATH);
+  
+  for (const init of initArray) {
+    for (const p of pathArray) {
+      const attempt = path.resolve(p, init);
+      const check = checkPath(attempt);
+  
+      if (isExistSudoCommand === false && check) {
+        isExistSudoCommand = hash_map[init]
+      }
+    }
+  }
+}
+
+const shell = os.platform() === 'win32' ? 'powershell.exe' : (isExistSudoCommand ? 'sudo' : 'login');
+const shell_opt = os.platform() === 'win32' ? [] : (isExistSudoCommand ? ['login'] : []);
 
 function sendProcessInfo() {
   const mu = process.memoryUsage();
